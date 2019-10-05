@@ -3,7 +3,7 @@ addScript(lmDeclare, lmInit, lmUpdate);
 function lmDeclare(){
     window.bars = new Array();
     window.settings = {
-        speed: 350,
+        speed: 550,
     }
     window.config = {
         despawnPosY: 650,
@@ -23,10 +23,24 @@ function lmInit(){
     track.spawn();
 
     var song = new Song();
-    song.addBar(0, 0);
-    song.addBar(1, 1);
-    song.addBar(2, 3);
-    song.addBar(3, 2);
+    song.addBar(0, [0]);
+    song.addBar(0.75, [1]);
+    song.addBar(1.5, [3]);
+    song.addBar(2.25, [2]);
+    song.addBar(3, [0]);
+    song.addBar(3.5, [3]);
+    song.addBar(4, [1]);
+    song.addBar(4.5, [0]);
+    song.addBar(5, [3,1]);
+    song.addBar(5.5, [2,0]);
+    song.addBar(6, [1,2]);
+    song.addBar(6.5, [0,3]);
+    song.addBar(7, [1]);
+    song.addBar(7.5, [2]);
+    song.addBar(8, [3,2]);
+    song.addBar(8.5, [1,0]);
+    song.addBar(9, [2]);
+    song.addBar(9.5, [3]);
 
     startSong(song);
 }
@@ -41,7 +55,9 @@ function lmUpdate(){
         currentSong.currentTime += deltaTime;
         if(currentSong.currentBeatmapPosition < currentSong.beatmap.length){
             if(currentSong.currentTime >= currentSong.beatmap[currentSong.currentBeatmapPosition].time){
-                spawnBar(currentSong.beatmap[currentSong.currentBeatmapPosition].lane);
+                for(var i in currentSong.beatmap[currentSong.currentBeatmapPosition].lanes){
+                    spawnBar(currentSong.beatmap[currentSong.currentBeatmapPosition].lanes[i]);
+                }
                 currentSong.currentBeatmapPosition++;
             }
         }else{
@@ -103,8 +119,8 @@ class Song {
         this.currentTime = 0;
         this.currentBeatmapPosition = 0;
     }
-    addBar = function(time, lane){
-        this.beatmap[this.barCount++] = {time: time, lane: lane};
+    addBar = function(time, lanes){
+        this.beatmap[this.barCount++] = {time: time, lanes: lanes};
     }
     reset = function(){
         this.currentTime = 0;
