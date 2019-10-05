@@ -117,37 +117,37 @@ function draw() {
     context.clearRect(0, 0, browserScreen.width * 2, browserScreen.height * 2);
 
     for(var layer = 0; layer < worldObjects.length; layer++){
-        for(var name in worldObjects[layer]){
-            if(worldObjects[layer][name].component.id == 0){
-                context.translate(browserScreen.width + (browserScreen.width * worldObjects[layer][name].position.x),
-                browserScreen.height + (browserScreen.height * worldObjects[layer][name].position.y));
-                context.rotate(worldObjects[layer][name].rotation * Math.PI / 180);
-                context.translate(-worldObjects[layer][name].width/2, -worldObjects[layer][name].height/2);
-            } else if(worldObjects[layer][name].component.name == "text"){
+        for(var id in worldObjects[layer]){
+            if(worldObjects[layer][id].component.id == 0){
+                context.translate(browserScreen.width + worldObjects[layer][id].position.x,
+                browserScreen.height + worldObjects[layer][id].position.y);
+                context.rotate(worldObjects[layer][id].rotation * Math.PI / 180);
+                context.translate(-worldObjects[layer][id].width/2, -worldObjects[layer][id].height/2);
+            } else if(worldObjects[layer][id].component.name == "text"){
                 context.textAlign = "center";
-                context.font = worldObjects[layer][name].height + "px " + worldObjects[layer][name].component.font;
+                context.font = worldObjects[layer][id].height + "px " + worldObjects[layer][id].component.font;
             }
     
-            if(worldObjects[layer][name].alpha != null){
-                context.globalAlpha = worldObjects[layer][name].alpha * globalAlpha;
+            if(worldObjects[layer][id].alpha != null){
+                context.globalAlpha = worldObjects[layer][id].alpha * globalAlpha;
                 document.getElementById("gameContent").style.opacity = globalAlpha;
             }
 
-            if(worldObjects[layer][name].component.id == 0){
-                context.drawImage(worldObjects[layer][name].component.image, 0, 0, worldObjects[layer][name].width, worldObjects[layer][name].height);
-            } else if(worldObjects[layer][name].component.name == "text"){
-                context.fillText(worldObjects[layer][name].component.content, 
-                    browserScreen.width + (browserScreen.width * worldObjects[layer][name].position.x), 
-                    browserScreen.height + (worldObjects[layer][name].height * 0.4) + (browserScreen.height * worldObjects[layer][name].position.y));
+            if(worldObjects[layer][id].component.id == 0){
+                context.drawImage(worldObjects[layer][id].component.image, 0, 0, worldObjects[layer][id].width, worldObjects[layer][id].height);
+            } else if(worldObjects[layer][id].component.name == "text"){
+                context.fillText(worldObjects[layer][id].component.content, 
+                    browserScreen.width + worldObjects[layer][id].position.x, 
+                    browserScreen.height + (worldObjects[layer][id].height * 0.4) + worldObjects[layer][id].position.y);
             }
             
             context.globalAlpha = globalAlpha;
 
-            if(worldObjects[layer][name].component.id == 0){
-                context.translate(worldObjects[layer][name].width/2, worldObjects[layer][name].height/2);
-                context.rotate(-worldObjects[layer][name].rotation * Math.PI / 180);
-                context.translate(-(browserScreen.width + (browserScreen.width * worldObjects[layer][name].position.x)),
-                    -(browserScreen.height + (browserScreen.height * worldObjects[layer][name].position.y)));
+            if(worldObjects[layer][id].component.id == 0){
+                context.translate(worldObjects[layer][id].width/2, worldObjects[layer][id].height/2);
+                context.rotate(-worldObjects[layer][id].rotation * Math.PI / 180);
+                context.translate(-(browserScreen.width + worldObjects[layer][id].position.x),
+                    -(browserScreen.height + worldObjects[layer][id].position.y));
             }
         }
     }
