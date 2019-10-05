@@ -98,13 +98,13 @@ class Bar {
     }
 
     fadeIn = function(){
-        this.body.alpha = Math.min(this.body.alpha + (deltaTime * 3), 1);
+        this.body.alpha = Math.min(this.body.alpha + (deltaTime * 2.9), 1);
     }
 
     missFadeOut = function(){
-        this.body.width += deltaTime * 400;
-        this.body.height += deltaTime * 400;
-        this.body.alpha = Math.max(this.body.alpha - (deltaTime * 10), 0);
+        this.body.width += deltaTime * 390;
+        this.body.height += deltaTime * 390;
+        this.body.alpha = Math.max(this.body.alpha - (deltaTime * 9), 0);
     }
 
     despawn = function(){
