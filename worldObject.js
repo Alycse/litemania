@@ -1,5 +1,8 @@
+var worldObjectId = 0;
+
 class worldObject{
     constructor(name, component, position, rotation, size, layer, tag){
+        this.id = worldObjectId++;
         this.name = name;
         this.component = component;
         this.position = position;
@@ -36,7 +39,7 @@ class worldObject{
         if(worldObjects[this.layer] == null){
             worldObjects[this.layer] = new Array();
         }
-        worldObjects[this.layer][this.name] = this;
+        worldObjects[this.layer][this.id] = this;
         for(var i in this.children){
             this.children[i].layer = this.layer + 1;
             spawnWorldObject(this.children[i]);
@@ -47,7 +50,7 @@ class worldObject{
         for(var i in this.children){
             despawnWorldObject(this.children[i]);
         }
-        delete worldObjects[this.layer][this.name];
+        delete worldObjects[this.layer][this.id];
     }    
 }
 
