@@ -35,6 +35,8 @@ function setCanvas(){
     context.globalCompositeOperation = 'destination-over';
 }
 
+var loaded = false;
+
 var images = new Array();
 preloadImages([
     "/assets/track.png",
@@ -42,8 +44,7 @@ preloadImages([
     "/assets/pink-bar.png"
 ]);
 var imagesLength;
-var progress = 0;
-var loaded = false;
+var imagePreloadProgress = 0;
 function preloadImages(imagesToPreload){
     for(var i in imagesToPreload){
         images[imagesToPreload[i]] = new Image();
@@ -56,11 +57,11 @@ function preloadImages(imagesToPreload){
 }
 function imageLoadCheck() {
     if(!loaded){
-        if (progress == imagesLength-1) {
+        if (imagePreloadProgress == imagesLength-1) {
             init();
             loaded = true;
         }else{
-            progress++;
+            imagePreloadProgress++;
         }
     }
 }
@@ -90,26 +91,29 @@ function init() {
     for(var i in inits){
         inits[i]();
     }
-    window.requestAnimationFrame(update);
+    update();
 }
 
 document.addEventListener('visibilitychange', function(e) {
     previousTime = new Date().getTime();
 });
 
-var previousTime = new Date().getTime();
 var deltaTime = 0;
 function update(){
-    deltaTime = Math.min((new Date().getTime() - previousTime)/1000, 0.05);
-    previousTime = new Date().getTime();
+    var previousTime = new Date().getTime();
+    function execute() {
+        deltaTime = Math.min((new Date().getTime() - previousTime)/1000, 0.05);
+        previousTime = new Date().getTime();
 
-    for(var i in updates){
-        updates[i]();
+        for(var i in updates){
+            updates[i]();
+        }
+
+        draw();
+
+        window.requestAnimationFrame(execute);
     }
-
-    draw();
-
-    window.requestAnimationFrame(update);
+    execute();
 }
 
 var globalAlpha = 1;
