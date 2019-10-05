@@ -1,7 +1,14 @@
 addScript(lmDeclare, lmInit, lmUpdate);
 
 function lmDeclare(){
-
+    window.bars = new Array();
+    window.settings = {
+        speed: 350,
+    }
+    window.config = {
+        despawnPosY: 650,
+        missPosY: 600
+    }
 }
 
 function lmInit(){
@@ -15,7 +22,14 @@ function lmInit(){
 }
 
 function lmUpdate(){
-
+    for(var i in bars){
+        bars[i].position.y += deltaTime * settings.speed;
+        if(bars[i].position.y > config.despawnPosY){
+            bars[i].despawn();
+        } else if(bars[i].position.y > config.missPosY){
+            missBar(bars[i]);
+        }
+    }
 }
 
 function spawnBar(position){
@@ -28,5 +42,13 @@ function spawnBar(position){
     }else{
         var bar = new worldObject("Bar", {id: 0, images: {default: "/assets/gray-bar.png"}}, {x: 366, y: 300}, 0, 1.45, 0, "bar");
     }
+    bar.alpha = 1;
+    bars.push(bar);
     bar.spawn();
+}
+
+function missBar(bar){
+    bar.width += deltaTime * 400;
+    bar.height += deltaTime * 400;
+    bar.alpha = Math.max(bar.alpha - (deltaTime * 10), 0);
 }

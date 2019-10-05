@@ -130,7 +130,6 @@ function draw() {
     
             if(worldObjects[layer][id].alpha != null){
                 context.globalAlpha = worldObjects[layer][id].alpha * globalAlpha;
-                document.getElementById("gameContent").style.opacity = globalAlpha;
             }
 
             if(worldObjects[layer][id].component.id == 0){

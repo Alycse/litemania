@@ -46,9 +46,9 @@ class worldObject{
         }
     }
 
-    despawnWorldObject = function(){
+    despawn = function(){
         for(var i in this.children){
-            despawnWorldObject(this.children[i]);
+            despawn(this.children[i]);
         }
         delete worldObjects[this.layer][this.id];
     }    
